@@ -10,7 +10,7 @@ def chopping_style_check():
     default_time = 45
     print("Press Enter to choose your chopping style")
     for value in loop_1_to_100(1):
-        sys.stdout.write(f'You accumulate your strengh: {value}\033[K\n')
+        sys.stdout.write(f'You accumulate your strength: {value}\033[K\n')
         #sys.stdout.write("\n")
         sys.stdout.flush()
         sys.stdout.write("\033[F")
