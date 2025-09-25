@@ -4,14 +4,13 @@ import time
 import os
 import sys
 import msvcrt
-
+import menus
 
 def chopping_style_check():
     default_time = 45
     print("Press Enter to choose your chopping style")
     for value in loop_1_to_100(1):
         sys.stdout.write(f'You accumulate your strength: {value}\033[K\n')
-        #sys.stdout.write("\n")
         sys.stdout.flush()
         sys.stdout.write("\033[F")
     print('\n\n---------------------------------')    
@@ -26,8 +25,25 @@ def chopping_style_check():
         aim_mod = 1
     print('---------------------------------\n')  
     chopping(default_time, aim_mod)
-#tu zrobic if value to wtedy speed mode
-#return odpowiedniej wartosci i niech tego returna od razu uzywa funkcja w mainie
+
+def loop_1_to_100(speed):
+    current_value = 0
+    direction = 1
+    
+    while True:
+        if msvcrt.kbhit():
+            key = msvcrt.getch()
+            if key == b'\r':
+                return current_value
+        yield current_value
+
+        current_value += direction    
+        if current_value == 100:
+            direction = -1
+        elif current_value == 0:
+            direction = 1  
+
+        time.sleep(0.015 * speed)
 
 def chopping(time_limit, aim_mod):
     round_won = 0
@@ -42,7 +58,6 @@ def chopping(time_limit, aim_mod):
                 print("\nWhat do you want to do?")
                 print("1. Start next round")
                 print("2. Collect wood and leave\n")
-                #input() ?
                 while True:
                     if msvcrt.kbhit():
                         key = msvcrt.getch()
@@ -57,9 +72,7 @@ def chopping(time_limit, aim_mod):
                             print(f"Invalid key. Press 1 or 2.")
                     time.sleep(0.05)
         
-
             print("\nPress Enter when you are ready to start chopping")
-            #albo input()
             while True:
                 if msvcrt.kbhit():
                     key = msvcrt.getch()
@@ -94,7 +107,8 @@ def chopping(time_limit, aim_mod):
                 else:
                     print(f'Not even close! Critical spot is on {exact_spot}!')
 
-                print(f'Wood health: [{wood_health}/4]\n')
+                if wood_health > 0:
+                    print(f'Wood health: [{wood_health}/4]\n')
 
             print("\nYou chopped down the tree!!!!!\n")
             round_won += 1
@@ -117,45 +131,22 @@ def chopping(time_limit, aim_mod):
         print("\nYou ran out of time and you faint!\n")
         return
 
-    
-
 def time_check(start_time, time_limit):
     elapsed_time = time.time() - start_time
     if elapsed_time > time_limit:
         raise TimeOut
     return time_limit - int(elapsed_time)
 
-
 class TimeOut(Exception):
     pass
 
-def loop_1_to_100(speed):
-    current_value = 0
-    direction = 1
-    
-    while True:
-        if msvcrt.kbhit():
-            key = msvcrt.getch()
-            if key == b'\r':
-                return current_value
-
-        yield current_value
-
-        current_value += direction    
-        if current_value == 100:
-            direction = -1
-        elif current_value == 0:
-            direction = 1  
-
-        time.sleep(0.015 * speed)
-
 def give_wood(aim_mod, achieved_level):
     chopping_rewards = {
-        3: {1: 50, 2: 100, 3: 150, 4: 400, 5: 500, 6: 600},
-        2: {1: 60, 2: 125, 3: 185, 4: 500, 5: 625, 6: 750},
+        5: {1: 50, 2: 100, 3: 150, 4: 400, 5: 500, 6: 600},
+        3: {1: 60, 2: 125, 3: 185, 4: 500, 5: 625, 6: 750},
         1: {1: 85, 2: 175, 3: 260, 4: 700, 5: 875, 6: 1050}
     }
-    print(f'You collected {chopping_rewards[aim_mod][achieved_level]} wood')
-    #return chopping_rewards[aim_mod][achieved_level]
-    time.sleep(2)
-    exit() 
+    print(f'You collected {chopping_rewards[aim_mod][achieved_level]} wood\n')
+    #return chopping_rewards[aim_mod][achieved_level] # This will call "add_item" function
+    menus.character_menu()
+    
