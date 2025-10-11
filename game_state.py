@@ -1,4 +1,5 @@
 from typing import Dict
+import os
 
 class Inventory:
     def __init__(self):
@@ -19,6 +20,7 @@ class Inventory:
             "equipment": dict(self.equipment)
         }
     def show_inventory(self):
+        os.system('cls')
         print("\n=== INVENTORY ===")
 
         if not any([self.quest_items, self.materials, self.equipment]):
@@ -46,7 +48,7 @@ class Inventory:
                 print("None")
 
         print("=================\n")
-        
+
 class GameState:
     def __init__(self):
         self.inventory = Inventory()
@@ -77,6 +79,7 @@ class GameState:
             "inventory": self.inventory.to_dict()
         }
     def show_summary(self):
+        os.system('cls')
         print("\n=== PLAYER SUMMARY ===")
         print(f"Name:       {self.player_name}")
         print(f"Gender:     {self.player_gender}")

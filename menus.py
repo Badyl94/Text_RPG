@@ -13,6 +13,7 @@ def splash_screen():
     os.system('cls')
 
 def main_menu(game_state):
+    os.system('cls')
     print("What would you like to do?\n"
           "1. Start a New Game\n"
           "2. Load Saved Game\n"
