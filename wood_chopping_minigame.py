@@ -24,7 +24,7 @@ def chopping_style_check():
         print("You chose strong but wild strikes!")
         aim_mod = 1
     print('---------------------------------\n')  
-    chopping(default_time, aim_mod)
+    return(chopping(default_time, aim_mod))
 
 def loop_1_to_100(speed):
     current_value = 0
@@ -66,8 +66,7 @@ def chopping(time_limit, aim_mod):
                             break
                         elif key == b'2':
                             print("You chose to collect your wood and leave!\n")
-                            give_wood(aim_mod, round_won)
-                            return 
+                            return(give_wood(aim_mod, round_won))
                         else:
                             print(f"Invalid key. Press 1 or 2.")
                     time.sleep(0.05)
@@ -124,8 +123,7 @@ def chopping(time_limit, aim_mod):
             input("Press Enter to continue to the next round.")
         else:
             print("You chopped all the trees!")
-            give_wood(aim_mod, round_won)
-            return
+            return(give_wood(aim_mod, round_won))
 
     except TimeOut:
         print("\nYou ran out of time and you faint!\n")
@@ -147,6 +145,5 @@ def give_wood(aim_mod, achieved_level):
         1: {1: 85, 2: 175, 3: 260, 4: 700, 5: 875, 6: 1050}
     }
     print(f'You collected {chopping_rewards[aim_mod][achieved_level]} wood\n')
-    #return chopping_rewards[aim_mod][achieved_level] # This will call "add_item" function
-    menus.character_menu()
+    return chopping_rewards[aim_mod][achieved_level]
     

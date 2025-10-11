@@ -1,0 +1,15 @@
+{
+    "player_name": "BadylWczytanyZDwójki",
+    "player_gender": "Maniiiak",
+    "player_location": "Broken Hopes Canyon",
+    "player_profession": "Warrior",
+    "player_level": 1,
+    "player_experience": 0,
+    "inventory": {
+        "quest_items": {},
+        "materials": {
+            "Wood": 650
+        },
+        "equipment": {}
+    }
+}

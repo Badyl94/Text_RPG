@@ -5,7 +5,7 @@ import ops
 import os
 import sys
 import monologues
-
+import save_manager
 
 def splash_screen():
     print("Welcome to the Text_RPG (all rights reserved)!!")
@@ -24,8 +24,7 @@ def main_menu(game_state):
                monologues.new_game_opening_section()
                monologues.character_creation(game_state)
             elif key == b'2':
-                load_game()
-                pass
+                character_menu(save_manager.load_game())
             elif key == b'3':
                 sys.exit()
             else:
@@ -33,12 +32,13 @@ def main_menu(game_state):
 
 def character_menu(game_state):
     os.system('cls')
-    #location name will be replaced
-    #print(f"You are located in Broken Hopes Canyon")
     print("What do you want to do?")
     print("1. Check information about your character")
-    print("2. Chop wood")
-    print("3. Go back to main menu")
+    print("2. Check your inventory")
+    print("3. Chop wood")
+    print("4. Save game")
+    print("5. Go back to main menu")
+
     while True:
         if msvcrt.kbhit():
             key = msvcrt.getch()
@@ -47,12 +47,20 @@ def character_menu(game_state):
                 input("Press Enter to go back.")
                 character_menu(game_state)
             elif key == b'2':
-                wood_chopping_minigame.chopping_style_check()
+                game_state.inventory.show_inventory()
+                input("Press Enter to go back.")
+                character_menu(game_state)
             elif key == b'3':
-                main_menu()
-            else:
-                print(f"Invalid key {key}. Press 1 or 2.")
+                wood_to_be_added = wood_chopping_minigame.chopping_style_check()
+                game_state.inventory.add_item("materials", "Wood", wood_to_be_added)
+                input("Press Enter to continue.") 
+                character_menu(game_state)
+            elif key == b'4':
+                filename = input("Provide a name for your save file: \n")
+                save_manager.save_game(game_state, filename)
+                print("Game saved successfully.")
+                input("Press Enter to continue.")
+                character_menu(game_state)
+            elif key == b'5':
+                main_menu(game_state)
         time.sleep(0.05)
-
-def load_game():
-    pass
